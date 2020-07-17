@@ -1,20 +1,21 @@
 package main
 
 import (
-	"github.com/jinzhu/gorm"
 	"fmt"
+
+	"github.com/jinzhu/gorm"
 )
 
 type Survey struct {
 	gorm.Model
-	Name string
-	Email string
+	Name    string
+	Email   string
 	Content string
 }
 
 func (s Survey) String() string {
 	return fmt.Sprintf(
-`Name: %s
+		`Name: %s
 Email: %s
 Time: %s,
 Content: 

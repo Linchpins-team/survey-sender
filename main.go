@@ -5,16 +5,24 @@ import (
 	"fmt"
 )
 
-func main() {
+var (
+	Configure Config
+)
+
+func initConfig() {
 	var path string
 	flag.StringVar(&path, "c", "config.toml", "use -c to choose configure file.")
 	flag.Parse()
 
-	config, err := LoadConfig(path)
+	var err error
+	Configure, err = LoadConfig(path)
 	if err != nil {
 		fmt.Println("Configure file not found. Generating...")
-		InitConfig(path)
+		DefaultConfig(path)
 		return
 	}
-	fmt.Println(config)
+}
+
+func main() {
+	initConfig()
 }

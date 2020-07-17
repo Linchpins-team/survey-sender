@@ -1,26 +1,29 @@
 package main
 
 import (
-	"github.com/BurntSushi/toml"
-	"os"
 	"fmt"
+	"os"
+
+	"github.com/BurntSushi/toml"
 )
 
 type Config struct {
 	Receivers []string
-	Host string
-	Port int
-	Mail string
-	Password string
+	Host      string
+	Port      int
+	Mail      string
+	Password  string
+	SaveAt    string
 }
 
-func InitConfig(path string) {
-	c := Config {
-		Host: "localhost",
-		Port: 25,
+func DefaultConfig(path string) {
+	c := Config{
+		Host:   "localhost",
+		Port:   25,
+		SaveAt: "surveys",
 	}
 	writeConfig(c, path)
-} 
+}
 
 func writeConfig(c Config, path string) {
 	fmt.Println(c)
