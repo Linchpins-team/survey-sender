@@ -8,13 +8,12 @@ import (
 )
 
 func testSurvey() Survey {
-	survey := Survey{
+	return Survey{
 		Name:    "Foo Bar",
 		Email:   "foobar@example.com",
 		Content: "Hi!\nHow are you?",
+		CreatedAt: time.Now()
 	}
-	survey.CreatedAt = time.Now()
-	return survey
 }
 
 func TestSendMail(t *testing.T) {

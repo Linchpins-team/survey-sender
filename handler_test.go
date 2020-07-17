@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"io/ioutil"
+	"net/http"
 	"net/http/httptest"
 	"testing"
 
@@ -12,14 +13,27 @@ import (
 
 func TestNewSurvey(t *testing.T) {
 	s := testSurvey()
-	handler := NewHandler()
-	body, err := json.Marshal(s)
-	assert.Nil(t, err)
-	req := httptest.NewRequest("POST", "/", bytes.NewReader(body))
-	w := httptest.NewRecorder()
-	handler.newSurvey(w, req)
-	response := w.Result()
+	response := testRequest(s)
 	if response.StatusCode != 200 {
 		t.Error(ioutil.ReadAll(response.Body))
 	}
+}
+
+func TestInvalidEmail(t *testing.T) {
+	s := Survey{
+		Name:    "Foo Bar",
+		Email:   "invalid.email",
+		Content: "Nothing",
+	}
+	response := testRequest(s)
+	assert.Equal(t, response.StatusCode, 403)
+}
+
+func testRequest(survey Survey) (response *http.Response) {
+	handler := NewHandler()
+	body, _ := json.Marshal(survey)
+	req := httptest.NewRequest("POST", "/", bytes.NewReader(body))
+	w := httptest.NewRecorder()
+	handler.newSurvey(w, req)
+	return w.Result()
 }
