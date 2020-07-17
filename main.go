@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
+	"net/http"
 )
 
 var (
@@ -25,4 +27,8 @@ func initConfig() {
 
 func main() {
 	initConfig()
+	handler := NewHandler()
+	http.HandleFunc("/", handler.newSurvey)
+	fmt.Println("Listen on http://localhost:1510")
+	log.Fatal(http.ListenAndServe("localhost:1510", nil))
 }

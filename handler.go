@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"net/http"
+	"time"
 )
 
 type Handler struct {
@@ -26,6 +27,7 @@ func (h Handler) newSurvey(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), 403)
 		return
 	}
+	survey.CreatedAt = time.Now()
 	if !survey.CheckAvailable() {
 		http.Error(w, "This survey is not available", 403)
 		return

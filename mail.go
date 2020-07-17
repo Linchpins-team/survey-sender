@@ -1,8 +1,8 @@
 package main
 
 import (
-	"net/smtp"
 	"fmt"
+	"net/smtp"
 )
 
 type Sender struct {

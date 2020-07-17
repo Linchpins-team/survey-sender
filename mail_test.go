@@ -9,10 +9,10 @@ import (
 
 func testSurvey() Survey {
 	return Survey{
-		Name:    "Foo Bar",
-		Email:   "foobar@example.com",
-		Content: "Hi!\nHow are you?",
-		CreatedAt: time.Now()
+		Name:      "Foo Bar",
+		Email:     "foobar@example.com",
+		Content:   "Hi!\nHow are you?",
+		CreatedAt: time.Now(),
 	}
 }
 

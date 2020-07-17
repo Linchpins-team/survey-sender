@@ -16,3 +16,4 @@
 config.toml
 go.sum
 surveys
+survey-sender
