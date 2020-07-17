@@ -2,15 +2,15 @@ package main
 
 import (
 	"fmt"
-
-	"github.com/jinzhu/gorm"
+	"regexp"
+	"time"
 )
 
 type Survey struct {
-	gorm.Model
-	Name    string
-	Email   string
-	Content string
+	Name      string    `json:"name"`
+	Email     string    `json:"email"`
+	Content   string    `json:"content"`
+	CreatedAt time.Time `json:"-"`
 }
 
 func (s Survey) String() string {
@@ -23,4 +23,12 @@ Content:
 %s
 
 `, s.Name, s.Email, s.CreatedAt.Format("2006 01/02 15:04"), s.Content)
+}
+
+func (s Survey) CheckAvailable() bool {
+	return checkEmail(s.Email)
+}
+
+func checkEmail(email string) bool {
+	return regexp.MustCompile(`(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)`).MatchString(email)
 }
